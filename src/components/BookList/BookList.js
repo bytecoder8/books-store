@@ -3,24 +3,38 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import withBookStoreService from '../../hocs/withBookstoreService'
 import { compose } from '../../utils'
-import { loadBooks } from '../../redux/actions'
+import { booksRequested, loadBooks } from '../../redux/actions'
 import BookListItem from '../BookListItem'
+import Loader from '../Loader'
+import ErrorMessage from '../ErrorMessage'
 import './BookList.css'
 
 
 class BookList extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    error: PropTypes.string,
+    loading: PropTypes.bool.isRequired
   }
 
   componentDidMount() {
-    const service = this.props.bookstoreService
-    const books = service.getBooks()
-    this.props.loadBooks(books)
+    const { bookstoreService, booksRequested, loadBooks } = this.props
+    booksRequested()
+    bookstoreService.getBooks()
+      .then(books => loadBooks(books))
+      .catch(error => console.log(error))
   }
 
   render() {
-    const { books } = this.props
+    const { books, error, loading } = this.props
+
+    if (loading) {
+      return <Loader />
+    }
+
+    if (error) {
+      return <ErrorMessage error={error} />
+    }
 
     return (
       <ul className="book-list">
@@ -32,9 +46,10 @@ class BookList extends Component {
   }
 }
 
-const mapStateToProps = ({ books }) => ({ books })
+const mapStateToProps = state => (state.books)
 
 const mapDispatchToProps = {
+  booksRequested,
   loadBooks
 }
 

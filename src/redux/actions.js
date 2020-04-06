@@ -1,4 +1,8 @@
-import { FETCH_BOOKS_SUCCESS } from "./types";
+import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUEST } from "./types";
+
+const booksRequested = () => ({
+  type: FETCH_BOOKS_REQUEST
+})
 
 const loadBooks = (newBooks) => ({
   type: FETCH_BOOKS_SUCCESS,
@@ -6,5 +10,6 @@ const loadBooks = (newBooks) => ({
 })
 
 export {
+  booksRequested,
   loadBooks
 }
