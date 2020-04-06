@@ -1,0 +1,8 @@
+.book-list {
+  display: flex;
+  list-style: none;
+}
+
+.book-list li:nth-child(n+2) {
+  margin-left: 1em;
+}

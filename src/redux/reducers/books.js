@@ -1,12 +1,14 @@
-import { BOOKS_FETCHED } from '../types'
+import { FETCH_BOOKS_SUCCESS } from '../types'
 
 
-const bookReducer = ( state = [], action ) => {
-  switch (action.type) {
-    case BOOKS_FETCHED:
-      return {
-        ...state, books: []
-      }
+const initialState = []
+
+const bookReducer = ( state = initialState, action ) => {
+  const { type, payload } = action
+  
+  switch (type) {
+    case FETCH_BOOKS_SUCCESS:
+      return payload
     default:
       return state
   }
