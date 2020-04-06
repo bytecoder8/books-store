@@ -35,11 +35,9 @@ const mapStateToProps = (state) => ({
   books: state.books
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  booksFetched: newBooks => {
-    dispatch(loadBooks(newBooks))
-  }
-})
+const mapDispatchToProps = {
+  booksFetched: loadBooks
+}
 
 
 export default withBookStoreService(connect(mapStateToProps, mapDispatchToProps)(BookList))
