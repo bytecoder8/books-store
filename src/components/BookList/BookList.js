@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import withBookStoreService from '../../hocs/withBookstoreService'
+import { loadBooks } from '../../redux/actions'
 import BookListItem from '../BookListItem'
 import './BookList.css'
 
@@ -14,7 +15,7 @@ class BookList extends Component {
   componentDidMount() {
     const service = this.props.bookstoreService
     const books = service.getBooks()
-    this.props.booksLoaded(books)
+    this.props.booksFetched(books)
   }
 
   render() {
@@ -35,11 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  booksLoaded: newBooks => {
-    dispatch({
-      type: 'FETCH_BOOKS_SUCCESS',
-      payload: newBooks
-    })
+  booksFetched: newBooks => {
+    dispatch(loadBooks(newBooks))
   }
 })
 
