@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import withBookStoreService from '../../hocs/withBookstoreService'
 import { compose } from '../../utils'
-import { booksRequested, loadBooks, booksError } from '../../redux/actions'
+import { fetchBooks } from '../../redux/actions'
 import BookListItem from '../BookListItem'
 import Loader from '../Loader'
 import ErrorMessage from '../ErrorMessage'
@@ -45,15 +45,8 @@ class BookList extends Component {
 
 const mapStateToProps = state => (state.books)
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchBooks: () => {
-    const { bookstoreService } = ownProps
-    dispatch(booksRequested())
-
-    bookstoreService.getBooks()
-      .then(books => dispatch(loadBooks(books)))
-      .catch(error => dispatch(booksError(error)))
-  }
+const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
+  fetchBooks: fetchBooks(bookstoreService, dispatch) // returns a closure
 })
 
 

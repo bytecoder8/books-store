@@ -1,21 +1,28 @@
-import { FETCH_BOOKS_SUCCESS, FETCH_BOOKS_REQUEST, FETCH_BOOKS_FAILURE } from "./types";
+import { REQUEST, SUCCESS, FAILURE, FETCH_BOOKS } from './types'
+
 
 const booksRequested = () => ({
-  type: FETCH_BOOKS_REQUEST
+  type: FETCH_BOOKS + REQUEST
 })
 
 const loadBooks = (newBooks) => ({
-  type: FETCH_BOOKS_SUCCESS,
+  type: FETCH_BOOKS + SUCCESS,
   payload: newBooks
 })
 
 const booksError = (error) => ({
-  type: FETCH_BOOKS_FAILURE,
+  type: FETCH_BOOKS + FAILURE,
   payload: error
 })
 
+const fetchBooks = (bookstoreService, dispatch) => () => {
+  dispatch(booksRequested())
+
+  bookstoreService.getBooks()
+    .then(books => dispatch(loadBooks(books)))
+    .catch(error => dispatch(booksError(error)))
+}
+
 export {
-  booksRequested,
-  loadBooks,
-  booksError
+  fetchBooks
 }
