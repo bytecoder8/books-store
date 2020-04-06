@@ -13,20 +13,13 @@ import './BookList.css'
 class BookList extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    fetchBooks: PropTypes.func.isRequired,
+    error: PropTypes.string
   }
 
   componentDidMount() {
-    const { bookstoreService,
-      booksRequested,
-      loadBooks,
-      booksError } = this.props
-
-    booksRequested()
-    bookstoreService.getBooks()
-      .then(books => loadBooks(books))
-      .catch(error => booksError(error))
+    this.props.fetchBooks()
   }
 
   render() {
@@ -52,11 +45,16 @@ class BookList extends Component {
 
 const mapStateToProps = state => (state.books)
 
-const mapDispatchToProps = {
-  booksRequested,
-  loadBooks,
-  booksError
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchBooks: () => {
+    const { bookstoreService } = ownProps
+    dispatch(booksRequested())
+
+    bookstoreService.getBooks()
+      .then(books => dispatch(loadBooks(books)))
+      .catch(error => dispatch(booksError(error)))
+  }
+})
 
 
 export default compose(
