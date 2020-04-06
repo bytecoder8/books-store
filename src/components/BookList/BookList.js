@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import withBookStoreService from '../../hocs/withBookstoreService'
+import { compose } from '../../utils'
 import { loadBooks } from '../../redux/actions'
 import BookListItem from '../BookListItem'
 import './BookList.css'
@@ -15,7 +16,7 @@ class BookList extends Component {
   componentDidMount() {
     const service = this.props.bookstoreService
     const books = service.getBooks()
-    this.props.booksFetched(books)
+    this.props.loadBooks(books)
   }
 
   render() {
@@ -31,13 +32,14 @@ class BookList extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  books: state.books
-})
+const mapStateToProps = ({ books }) => ({ books })
 
 const mapDispatchToProps = {
-  booksFetched: loadBooks
+  loadBooks
 }
 
 
-export default withBookStoreService(connect(mapStateToProps, mapDispatchToProps)(BookList))
+export default compose(
+  withBookStoreService(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(BookList)
