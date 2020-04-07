@@ -3,16 +3,19 @@ export default class BookstoreService {
     id: 1,
     title: 'JavaScript The Good Parts',
     author: 'Douglas Crockford',
+    price: 15,
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/5131OWtQRaL._SX381_BO1,204,203,200_.jpg'
   }, {
     id: 2,
     title: 'The Road to React',
     author: 'Robin Wieruch',
+    price: 10,
     imageUrl: 'https://m.media-amazon.com/images/I/31apmbgpwkL.jpg'
   }, {
     id: 3,
     title: 'Eloquent JavaScript',
     author: 'Marijn Haverbeke',
+    price: 12,
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51-5ZXYtcML._SX377_BO1,204,203,200_.jpg'
   }]
 

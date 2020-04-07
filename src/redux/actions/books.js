@@ -1,4 +1,4 @@
-import { REQUEST, SUCCESS, FAILURE, FETCH_BOOKS } from './types'
+import { REQUEST, SUCCESS, FAILURE, FETCH_BOOKS } from '../types'
 
 
 const booksRequested = () => ({

@@ -2,8 +2,8 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import './App.css'
-import HomePage from './pages/Home'
-import Cart from './pages/Cart'
+import HomePage from './pages/HomePage'
+import CartPage from './pages/CartPage'
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/" exact={ true } component={ HomePage } />
-        <Route path="/cart" component={ Cart } />
+        <Route path="/cart" component={ CartPage } />
       </Switch>
     </div>
   );
