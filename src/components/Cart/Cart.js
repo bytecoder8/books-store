@@ -1,21 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import './Cart.css'
+import { removeBookFromCart, descreaseItemCount, increaseItemCount } from '../../redux/actions/cart'
 
 
-function Cart({ items }) {
+function Cart({ items, removeItem, increase, decrease }) {
 
   const renderRow = (item, index) => {
-    const { bookId, title, count, total } = item
+    const { id, title, count, total } = item
 
     return (
-      <tr key={bookId}>
+      <tr key={id}>
         <td>{index + 1}</td>
         <td>{title}</td>
-        <td>{count}</td>
+        <td>
+          {count}
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm ml-1"
+            onClick={ () => increase(id) }
+          >+</button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm ml-1"
+            onClick={ () => decrease(id) }
+          >-</button>
+        </td>
         <td>${total}</td>
         <th>
-          <button type="button" className="btn btn-warning">Delete</button>
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={ () => removeItem(id) }
+          >Delete</button>
         </th>
       </tr>
     )
@@ -48,6 +65,10 @@ function Cart({ items }) {
 }
 
 const mapStateToProps = (state) => state.cart
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  removeItem: removeBookFromCart,
+  decrease: descreaseItemCount,
+  increase: increaseItemCount
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
