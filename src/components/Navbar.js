@@ -1,17 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import CartCounter from './CartCounter'
 
 
 const links = [
   { to: '/', title: 'Home', exact: true },
-  { to: '/cart', title: 'Cart' },
+  { to: '/cart', title: <CartCounter /> },
 ]
 
 
 export default function Navbar(props) {
-  const { serviceName, onServiceChange } = props
-
+  
   return(
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <NavLink to="/" exact className="navbar-brand">BookStore</NavLink>
@@ -28,25 +27,7 @@ export default function Navbar(props) {
           )}
         </ul>
 
-        <form className="form-inline ml-3">
-          Current API: { serviceName }
-          <button
-            className="btn btn-sm btn-outline-success ml-1"
-            type="button"
-            onClick={ onServiceChange }
-          >Switch</button>
-        </form>
       </div>
     </nav>
   )
-}
-
-Navbar.propTypes = {
-  serviceName: PropTypes.string,
-  onServiceChange: PropTypes.func
-}
-
-Navbar.defaultProps = {
-  serviceName: 'Unknown',
-  toggleService: () => {}
 }
