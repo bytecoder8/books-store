@@ -1,0 +1,47 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
+
+function WishListItem({ item, onRemove, onAddToCart }) {
+
+  const { title, author } = item
+
+  return (
+    <div className="card">
+      <div className="card-body">
+        <h4 className="card-title">{ title }</h4>
+        <h6 className="card-subtitle mb-2 text-muted">{ author }</h6>
+        <p className="card-text">
+          Book Description
+        </p>
+        <button
+          type="button"
+          className="btn btn-outline-secondary btn-sm"
+        >Open</button>
+        <button
+          type="button"
+          className="btn btn-outline-danger btn-sm ml-2"
+          onClick={ onRemove }
+        >Remove</button>
+        <button
+          type="button"
+          className="btn btn-primary btn-sm ml-2"
+          onClick={ onAddToCart }
+        >Add to Cart</button>
+      </div>
+    </div>
+  )
+}
+
+WishListItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  onRemove: PropTypes.func,
+  onAddToCart: PropTypes.func
+}
+
+WishListItem.defaultProps = {
+  onRemove: () => {},
+  onAddToCart: () => {}
+}
+
+export default WishListItem

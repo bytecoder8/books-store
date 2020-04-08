@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-function BookListItem({ book, onAddToCart }) {
+function BookListItem({ book, onAddToCart, onAddToWishList }) {
   const { title, author } = book
   return (
     <div className="card">
@@ -12,7 +12,11 @@ function BookListItem({ book, onAddToCart }) {
         <p className="card-text">
           Book Description
         </p>
-        <button type="button" className="btn btn-outline-secondary">Add To Favorites</button>
+        <button
+          type="button"
+          className="btn btn-outline-secondary"
+          onClick={ onAddToWishList }
+        >Wishlist</button>
         <button
           type="button"
           className="btn btn-primary ml-2"
@@ -25,11 +29,13 @@ function BookListItem({ book, onAddToCart }) {
 
 BookListItem.propTypes = {
   book: PropTypes.object.isRequired,
-  onAddToCart: PropTypes.func
+  onAddToCart: PropTypes.func,
+  onAddToWishList: PropTypes.func
 }
 
 BookListItem.defaultProps = {
-  onAddToCart: () => {}
+  onAddToCart: () => {},
+  onAddToWishList: () => {}
 }
 
 

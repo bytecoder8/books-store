@@ -5,20 +5,22 @@ import withBookStoreService from '../../hocs/withBookstoreService'
 import { compose } from '../../utils'
 import { fetchBooks } from '../../redux/actions/books'
 import { addBookToCart } from '../../redux/actions/cart'
+import { addItemToWishList } from '../../redux/actions/wishlist'
 import BookListItem from '../BookListItem'
 import Loader from '../Loader'
 import ErrorMessage from '../ErrorMessage'
 import './BookList.css'
 
 
-function BookListRenderer({ books, onAddToCart }) {
+function BookListRenderer({ books, onAddToCart, onAddToWishList }) {
   return (
     <ul className="book-list">
       { books.map( book => (
         <li key={book.id}>
           <BookListItem
             book={ book }
-            onAddToCart={() => onAddToCart(book.id)} 
+            onAddToCart={() => onAddToCart(book.id)}
+            onAddToWishList={() => onAddToWishList(book.id)}
             />
         </li>
       )) }
@@ -36,7 +38,8 @@ class BookListContainer extends Component {
   }
 
   static defaultProps = {
-    onAddToCart: () => {}
+    onAddToCart: () => {},
+    onAddToWishList: () => {}
   }
 
   componentDidMount() {
@@ -44,7 +47,7 @@ class BookListContainer extends Component {
   }
 
   render() {
-    const { books, error, loading, onAddToCart } = this.props
+    const { books, error, loading, onAddToCart, onAddToWishList } = this.props
 
     if (loading) {
       return <Loader />
@@ -54,7 +57,11 @@ class BookListContainer extends Component {
       return <ErrorMessage error={error} />
     }
 
-    return <BookListRenderer books={books} onAddToCart={onAddToCart} />
+    return <BookListRenderer
+              books={books}
+              onAddToCart={onAddToCart}
+              onAddToWishList={onAddToWishList}
+            />
   }
 }
 
@@ -62,7 +69,8 @@ const mapStateToProps = state => state.books
 
 const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
   fetchBooks: fetchBooks(bookstoreService, dispatch), // returns a closure,
-  onAddToCart: (bookId) => dispatch(addBookToCart(bookId))
+  onAddToCart: (bookId) => dispatch(addBookToCart(bookId)),
+  onAddToWishList: (bookId) => dispatch(addItemToWishList(bookId))
 })
 
 

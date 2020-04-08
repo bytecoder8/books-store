@@ -5,6 +5,7 @@ import CartCounter from './CartCounter'
 
 const links = [
   { to: '/', title: 'Home', exact: true },
+  { to: '/wishlist', title: 'WishList'},
   { to: '/cart', title: <CartCounter /> },
 ]
 
