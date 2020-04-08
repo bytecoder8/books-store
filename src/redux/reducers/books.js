@@ -7,18 +7,23 @@ const initialState = {
   error: ''
 }
 
-const bookReducer = ( state = initialState, action ) => {
+const bookReducer = ( globalState, action ) => {
+
+  if (globalState === undefined) {
+    return initialState
+  }
+
   const { type, payload } = action
   
   switch (type) {
     case FETCH_BOOKS + REQUEST:
-      return { ...state, loading: true, error: '' }
+      return { books: [], loading: true, error: '' }
     case FETCH_BOOKS + SUCCESS:
-      return { ...state, books: payload, loading: false, error: '' }
+      return { books: payload, loading: false, error: '' }
     case FETCH_BOOKS + FAILURE:
-      return { ...state, error: payload, loading: false }
+      return { books: [], error: payload, loading: false }
     default:
-      return state
+      return globalState.books
   }
 }
 

@@ -17,6 +17,11 @@ const initialState = {
   ]
 }
 
+const findBook = (id, globalState) => {
+  const { books: { books } } = globalState
+  return books.find(book => book.id === id)
+}
+
 const createOrUpdateItem = (book, item = {}) => {
   const { id = book.id, title = book.title, count = 0, total = 0 } = item
 
@@ -67,13 +72,18 @@ const updateItemCount = (book, value) => items => {
 }
 
 
-const cartReducer = (state = initialState, action) => {
+const cartReducer = (globalState, action) => {
+
+  if (globalState === undefined) {
+    return initialState
+  }
+
   const { type, payload } = action
 
-  const { items } = state
+  const { cart: { items } } = globalState
   switch (type) {
     case ADD_BOOK_TO_CART:
-      const book = payload
+      const book = findBook(payload, globalState)
 
       const index = items.findIndex(item => item.id === book.id)
       const item = createOrUpdateItem(book, items[index])
@@ -86,14 +96,14 @@ const cartReducer = (state = initialState, action) => {
       }
     case INCREASE_CART_COUNT:
       return {
-        items: updateItemCount(payload, 1)(items)
+        items: updateItemCount(findBook(payload, globalState), 1)(items)
       }
     case DECREASE_CART_COUNT:
       return {
-        items: updateItemCount(payload, -1)(items)
+        items: updateItemCount(findBook(payload, globalState), -1)(items)
       }
     default:
-      return state
+      return globalState.cart
   }
 }
 

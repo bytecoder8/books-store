@@ -18,7 +18,7 @@ function BookListRenderer({ books, onAddToCart }) {
         <li key={book.id}>
           <BookListItem
             book={ book }
-            onAddToCart={() => onAddToCart(book)} 
+            onAddToCart={() => onAddToCart(book.id)} 
             />
         </li>
       )) }
@@ -62,7 +62,7 @@ const mapStateToProps = state => state.books
 
 const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
   fetchBooks: fetchBooks(bookstoreService, dispatch), // returns a closure,
-  onAddToCart: (book) => dispatch(addBookToCart(book))
+  onAddToCart: (bookId) => dispatch(addBookToCart(bookId))
 })
 
 
