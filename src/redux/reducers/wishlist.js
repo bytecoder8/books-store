@@ -19,7 +19,7 @@ const wishlistReducer = (globalState, action) => {
   switch (type) {
     case ADD_ITEM_TO_WISHLIST:
       const newItem = +payload
-      const index = items.findIndex(item => item === newItem)
+      const index = items.indexOf(newItem)
       if (index === -1) {
         return {
           items: items.concat(newItem)

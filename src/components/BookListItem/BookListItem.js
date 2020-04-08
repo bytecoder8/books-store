@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import WishListButton from '../WishListButton'
+import AddToCartButton from '../AddToCartButton'
 
 
 function BookListItem({ book, onAddToCart, onAddToWishList }) {
-  const { title, author } = book
+  const { id, title, author } = book
   return (
     <div className="card">
       <div className="card-body">
@@ -12,16 +14,14 @@ function BookListItem({ book, onAddToCart, onAddToWishList }) {
         <p className="card-text">
           Book Description
         </p>
-        <button
-          type="button"
-          className="btn btn-outline-secondary"
-          onClick={ onAddToWishList }
-        >Wishlist</button>
-        <button
-          type="button"
-          className="btn btn-primary ml-2"
-          onClick={ onAddToCart }
-        >Add to Cart</button>
+        <WishListButton
+          itemId={ id }
+          onAddToWishList={ onAddToWishList }
+        />
+        <AddToCartButton
+          itemId={ id }
+          onAddToCart={ onAddToCart }
+        />
       </div>
     </div>
   )

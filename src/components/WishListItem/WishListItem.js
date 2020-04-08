@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import AddToCartButton from '../AddToCartButton'
 
 
 function WishListItem({ item, onRemove, onAddToCart }) {
 
-  const { title, author } = item
+  const { id, title, author } = item
 
   return (
     <div className="card">
@@ -16,18 +17,10 @@ function WishListItem({ item, onRemove, onAddToCart }) {
         </p>
         <button
           type="button"
-          className="btn btn-outline-secondary btn-sm"
-        >Open</button>
-        <button
-          type="button"
           className="btn btn-outline-danger btn-sm ml-2"
           onClick={ onRemove }
         >Remove</button>
-        <button
-          type="button"
-          className="btn btn-primary btn-sm ml-2"
-          onClick={ onAddToCart }
-        >Add to Cart</button>
+        <AddToCartButton itemId={ id } onAddToCart={ onAddToCart } />
       </div>
     </div>
   )

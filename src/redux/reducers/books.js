@@ -17,11 +17,11 @@ const bookReducer = ( globalState, action ) => {
   
   switch (type) {
     case FETCH_BOOKS + REQUEST:
-      return { books: [], loading: true, error: '' }
+      return { ...globalState.books, loading: true, error: '' }
     case FETCH_BOOKS + SUCCESS:
       return { books: payload, loading: false, error: '' }
     case FETCH_BOOKS + FAILURE:
-      return { books: [], error: payload, loading: false }
+      return { ...globalState.books, error: payload, loading: false }
     default:
       return globalState.books
   }
