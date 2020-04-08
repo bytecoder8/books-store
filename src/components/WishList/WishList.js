@@ -8,7 +8,7 @@ import { addBookToCart } from '../../redux/actions/cart'
 
 function WishList() {
 
-  const items = useSelector(({ wishlist: { items }, books: { books } }) => {
+  const items = useSelector(({ wishlist: { items }, books: { items: books } }) => {
     return items.map(item => {
       const book = books.find(book => book.id === item)
       return book

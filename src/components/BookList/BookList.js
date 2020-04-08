@@ -30,7 +30,7 @@ function BookListRenderer({ books, onAddToCart, onAddToWishList }) {
 
 class BookListContainer extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     fetchBooks: PropTypes.func.isRequired,
     error: PropTypes.string,
@@ -47,7 +47,7 @@ class BookListContainer extends Component {
   }
 
   render() {
-    const { books, error, loading, onAddToCart, onAddToWishList } = this.props
+    const { items, error, loading, onAddToCart, onAddToWishList } = this.props
 
     if (loading) {
       return <Loader />
@@ -58,7 +58,7 @@ class BookListContainer extends Component {
     }
 
     return <BookListRenderer
-              books={books}
+              books={items}
               onAddToCart={onAddToCart}
               onAddToWishList={onAddToWishList}
             />

@@ -18,8 +18,8 @@ const initialState = {
 }
 
 const findBook = (id, globalState) => {
-  const { books: { books } } = globalState
-  return books.find(book => book.id === id)
+  const { books: { items } } = globalState
+  return items.find(book => book.id === id)
 }
 
 const createOrUpdateItem = (book, item = {}) => {
@@ -74,7 +74,7 @@ const updateItemCount = (book, value) => items => {
 
 const cartReducer = (globalState, action) => {
 
-  if (globalState === undefined) {
+  if (globalState === undefined || globalState.cart === undefined) {
     return initialState
   }
 

@@ -16,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ErrorBoundary>
       <BookstoreServiceProvider value={bookstoreService}>
-        <Router>
+        <Router basename={ process.env.PUBLIC_URL }>
           <App />
         </Router>
       </BookstoreServiceProvider>

@@ -1,15 +1,15 @@
 import { REQUEST, SUCCESS, FAILURE, FETCH_BOOKS } from '../types'
 
 
-const initialState = {
+export const initialState = {
   loading: false,
-  books: [],
+  items: [],
   error: ''
 }
 
 const bookReducer = ( globalState, action ) => {
 
-  if (globalState === undefined) {
+  if (globalState === undefined || globalState.books === undefined) {
     return initialState
   }
 
@@ -19,7 +19,7 @@ const bookReducer = ( globalState, action ) => {
     case FETCH_BOOKS + REQUEST:
       return { ...globalState.books, loading: true, error: '' }
     case FETCH_BOOKS + SUCCESS:
-      return { books: payload, loading: false, error: '' }
+      return { items: payload, loading: false, error: '' }
     case FETCH_BOOKS + FAILURE:
       return { ...globalState.books, error: payload, loading: false }
     default:

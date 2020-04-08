@@ -9,7 +9,7 @@ const initialState = {
 
 const wishlistReducer = (globalState, action) => {
 
-  if (globalState === undefined) {
+  if (globalState === undefined || globalState.wishlist === undefined) {
     return initialState
   }
 
