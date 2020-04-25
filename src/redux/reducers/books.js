@@ -1,7 +1,7 @@
 import { REQUEST, SUCCESS, FAILURE, FETCH_BOOKS } from '../types'
 
 
-export const initialState = {
+const initialState = {
   loading: false,
   items: [],
   error: ''

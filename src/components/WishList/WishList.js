@@ -1,12 +1,18 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import withBookstoreService from '../../hocs/withBookstoreService'
 import WishListItem from '../WishListItem'
-import './WishList.css'
+import Loader from '../Loader'
+import ErrorMessage from '../ErrorMessage'
 import { removeItemFromWishList } from '../../redux/actions/wishlist'
 import { addBookToCart } from '../../redux/actions/cart'
+import useBooksLoader from '../../hooks/useBooksLoader'
+import './WishList.css'
 
 
-function WishList() {
+function WishList({ bookstoreService }) {
+
+  const dispatch = useDispatch()
 
   const items = useSelector(({ wishlist: { items }, books: { items: books } }) => {
     return items.map(item => {
@@ -15,7 +21,16 @@ function WishList() {
     })
   })
 
-  const dispatch = useDispatch()
+
+  const { loading, error } = useBooksLoader(bookstoreService)
+
+  if (loading) {
+    return <Loader />
+  }
+
+  if (error) {
+    return <ErrorMessage error={error} />
+  }
 
   return (
     <ul className="wish-list">
@@ -32,4 +47,4 @@ function WishList() {
   )
 }
 
-export default WishList
+export default withBookstoreService()(WishList) 

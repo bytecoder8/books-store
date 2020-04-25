@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import withBookStoreService from '../../hocs/withBookstoreService'
+import withBookstoreService from '../../hocs/withBookstoreService'
 import { compose } from '../../utils'
 import { fetchBooks } from '../../redux/actions/books'
+import useBooksLoader from '../../hooks/useBooksLoader'
 import { addBookToCart } from '../../redux/actions/cart'
 import { addItemToWishList } from '../../redux/actions/wishlist'
 import BookListItem from '../BookListItem'
@@ -28,42 +29,38 @@ function BookListRenderer({ books, onAddToCart, onAddToWishList }) {
   )
 }
 
-class BookListContainer extends Component {
-  static propTypes = {
-    items: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired,
-    fetchBooks: PropTypes.func.isRequired,
-    error: PropTypes.string,
-    onAddToCart: PropTypes.func
+
+function BookListContainer({ bookstoreService, onAddToCart, onAddToWishList }) {
+  const { loading, error, items } = useBooksLoader(bookstoreService)
+
+  if (loading) {
+    return <Loader />
   }
 
-  static defaultProps = {
-    onAddToCart: () => {},
-    onAddToWishList: () => {}
+  if (error) {
+    return <ErrorMessage error={error} />
   }
 
-  componentDidMount() {
-    this.props.fetchBooks()
-  }
-
-  render() {
-    const { items, error, loading, onAddToCart, onAddToWishList } = this.props
-
-    if (loading) {
-      return <Loader />
-    }
-
-    if (error) {
-      return <ErrorMessage error={error} />
-    }
-
-    return <BookListRenderer
-              books={items}
-              onAddToCart={onAddToCart}
-              onAddToWishList={onAddToWishList}
-            />
-  }
+  return <BookListRenderer
+            books={items}
+            onAddToCart={onAddToCart}
+            onAddToWishList={onAddToWishList}
+          />
 }
+
+BookListContainer.propTypes = {
+  items: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  fetchBooks: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  onAddToCart: PropTypes.func
+}
+
+BookListContainer.defaultProps = {
+  onAddToCart: () => {},
+  onAddToWishList: () => {}
+}
+
 
 const mapStateToProps = state => state.books
 
@@ -75,6 +72,6 @@ const mapDispatchToProps = (dispatch, { bookstoreService }) => ({
 
 
 export default compose(
-  withBookStoreService(),
+  withBookstoreService(),
   connect(mapStateToProps, mapDispatchToProps)
 )(BookListContainer)

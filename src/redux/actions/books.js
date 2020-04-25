@@ -23,6 +23,15 @@ const fetchBooks = (bookstoreService, dispatch) => () => {
     .catch(error => dispatch(booksError(error)))
 }
 
+const fetchBooksNew = (bookstoreService) => () => (dispatch) => {
+  dispatch(booksRequested())
+
+  bookstoreService.getBooks()
+    .then(books => dispatch(loadBooks(books)))
+    .catch(error => dispatch(booksError(error)))
+}
+
 export {
-  fetchBooks
+  fetchBooks,
+  fetchBooksNew
 }
