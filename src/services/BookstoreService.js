@@ -19,10 +19,21 @@ export default class BookstoreService {
     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51-5ZXYtcML._SX377_BO1,204,203,200_.jpg'
   }]
 
+  cacheExpire = new Date()
+  cacheLife = 5 * 1000
+
   getBooks() {
     return new Promise(( resolve, reject ) => {
+
+      // return cached data
+      if (new Date() - this.cacheExpire < this.cacheLife) {
+        resolve(this.data)
+        return
+      }
+
       setTimeout(() => {
         if (Math.random() < 0.9) {
+          this.cacheExpire = new Date()
           resolve(this.data)
         } else {
           reject('Bookstore service error')
